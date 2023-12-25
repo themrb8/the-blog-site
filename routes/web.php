@@ -5,6 +5,10 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TagController;
 use App\Http\Controllers\ArticleController;
 
+use App\Models\Article;
+use App\Models\Category;
+use App\Models\Tag;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,7 +21,10 @@ use App\Http\Controllers\ArticleController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $articles = Article::all();
+    $categories = Category::all();
+    $tags = Tag::all();
+    return view('welcome', compact('articles','categories', 'tags'));
 });
 
 Route::resource('categories', CategoryController::class);

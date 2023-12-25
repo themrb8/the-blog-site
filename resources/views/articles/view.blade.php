@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Blog Site</title>
+    <title>Tailwind Blog Template</title>
     <meta name="author" content="David Grzyb">
     <meta name="description" content="">
 
@@ -31,8 +31,8 @@
 
             <nav>
                 <ul class="flex items-center justify-between font-bold text-sm text-white uppercase no-underline">
-                    <li><a class="hover:text-gray-200 hover:underline px-4" href="#">Login</a></li>
-                    <li><a class="hover:text-gray-200 hover:underline px-4" href="#">Register</a></li>
+                    <li><a class="hover:text-gray-200 hover:underline px-4" href="#">Shop</a></li>
+                    <li><a class="hover:text-gray-200 hover:underline px-4" href="#">About</a></li>
                 </ul>
             </nav>
 
@@ -58,10 +58,10 @@
     <header class="w-full container mx-auto">
         <div class="flex flex-col items-center py-12">
             <a class="font-bold text-gray-800 uppercase hover:text-gray-700 text-5xl" href="#">
-                The Blog Site
+                Minimal Blog
             </a>
             <p class="text-lg text-gray-600">
-                RomanTheMrb
+                Lorem Ipsum Dolor Sit Amet
             </p>
         </div>
     </header>
@@ -79,9 +79,12 @@
         </div>
         <div :class="open ? 'block': 'hidden'" class="w-full flex-grow sm:flex sm:items-center sm:w-auto">
             <div class="w-full container mx-auto flex flex-col sm:flex-row items-center justify-center text-sm font-bold uppercase mt-0 px-6 py-2">
-                @foreach($categories as $category)
-                    <a href="#" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">{{ $category->name }}</a>
-                @endforeach
+                <a href="#" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">Technology</a>
+                <a href="#" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">Automotive</a>
+                <a href="#" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">Finance</a>
+                <a href="#" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">Politics</a>
+                <a href="#" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">Culture</a>
+                <a href="#" class="hover:bg-gray-400 rounded py-2 px-4 mx-2">Sports</a>
             </div>
         </div>
     </nav>
@@ -89,41 +92,57 @@
 
     <div class="container mx-auto flex flex-wrap py-6">
 
-        <!-- Posts Section -->
+        <!-- Post Section -->
         <section class="w-full md:w-2/3 flex flex-col items-center px-3">
 
-            @foreach($articles as $article)
-            <article class="flex flex-row shadow my-4">
+            <article class="flex flex-col shadow my-4">
                 <!-- Article Image -->
-                <a href="#" class="hover:opacity-75 h-full w-full">
+                <a href="#" class="hover:opacity-75">
                     <img src="https://source.unsplash.com/collection/1346951/1000x500?sig=1">
                 </a>
                 <div class="bg-white flex flex-col justify-start p-6">
-
                     <a href="#" class="text-blue-700 text-sm font-bold uppercase pb-4">{{ $article->categories->first()->name }}</a>
-
-                    <a href="#" class="text-3xl font-bold hover:text-gray-700 pb-4">{{ $article->title}}</a>
-                    <p href="#" class="text-sm pb-3">
+                    <a href="#" class="text-3xl font-bold hover:text-gray-700 pb-4">{{ $article->title }}</a>
+                    <p href="#" class="text-sm pb-8">
                         By <a href="#" class="font-semibold hover:text-gray-800">The Default User</a>, Published on {{ \Carbon\Carbon::parse($article->created_at)->format('F jS, Y \a\t H:i') }}
                     </p>
-                    <a href="#" class="pb-6">{{ $article->content }}</a>
-                    <span>Tags: </span><a href="#" class="text-dark-400 text-sm lowercase pb-4">@foreach($article->tags as $tag)
-                        {{ $tag->name }}
-                        @if (!$loop->last)
-                        ,
-                        @endif
-                    @endforeach
-                    </a>
-                    <a href="{{ route('articles.show', ['article' => $article]) }}" class="uppercase text-gray-800 hover:text-black">Continue Reading <i class="fas fa-arrow-right"></i></a>
+                   <p>{{ $article->content }}</p>
                 </div>
             </article>
-            @endforeach
 
-            <!-- Pagination -->
-            <div class="flex items-center py-8">
-                <a href="#" class="h-10 w-10 bg-blue-800 hover:bg-blue-600 font-semibold text-white text-sm flex items-center justify-center">1</a>
-                <a href="#" class="h-10 w-10 font-semibold text-gray-800 hover:bg-blue-600 hover:text-white text-sm flex items-center justify-center">2</a>
-                <a href="#" class="h-10 w-10 font-semibold text-gray-800 hover:text-gray-900 text-sm flex items-center justify-center ml-3">Next <i class="fas fa-arrow-right ml-2"></i></a>
+            <div class="w-full flex pt-6">
+                <a href="#" class="w-1/2 bg-white shadow hover:shadow-md text-left p-6">
+                    <p class="text-lg text-blue-800 font-bold flex items-center"><i class="fas fa-arrow-left pr-1"></i> Previous</p>
+                    <p class="pt-2">Lorem Ipsum Dolor Sit Amet Dolor Sit Amet</p>
+                </a>
+                <a href="#" class="w-1/2 bg-white shadow hover:shadow-md text-right p-6">
+                    <p class="text-lg text-blue-800 font-bold flex items-center justify-end">Next <i class="fas fa-arrow-right pl-1"></i></p>
+                    <p class="pt-2">Lorem Ipsum Dolor Sit Amet Dolor Sit Amet</p>
+                </a>
+            </div>
+
+            <div class="w-full flex flex-col text-center md:text-left md:flex-row shadow bg-white mt-10 mb-10 p-6">
+                <div class="w-full md:w-1/5 flex justify-center md:justify-start pb-4">
+                    <img src="https://source.unsplash.com/collection/1346951/150x150?sig=1" class="rounded-full shadow h-32 w-32">
+                </div>
+                <div class="flex-1 flex flex-col justify-center md:justify-start">
+                    <p class="font-semibold text-2xl">David</p>
+                    <p class="pt-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur vel neque non libero suscipit suscipit eu eu urna.</p>
+                    <div class="flex items-center justify-center md:justify-start text-2xl no-underline text-blue-800 pt-4">
+                        <a class="" href="#">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a class="pl-4" href="#">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a class="pl-4" href="#">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a class="pl-4" href="#">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
 
         </section>
@@ -143,7 +162,7 @@
 
     </div>
 
-    <footer class="w-full border-t bg-white pb-12 pt-12">
+    <footer class="w-full border-t bg-white pb-12">
         <div class="w-full container mx-auto flex flex-col items-center">
             <div class="flex flex-col md:flex-row text-center md:text-left md:justify-between py-6">
                 <a href="#" class="uppercase px-3">About Us</a>
@@ -151,7 +170,7 @@
                 <a href="#" class="uppercase px-3">Terms & Conditions</a>
                 <a href="#" class="uppercase px-3">Contact Us</a>
             </div>
-            <div class="uppercase pb-6">&copy; the-blog-site.com</div>
+            <div class="uppercase pb-6">&copy; myblog.com</div>
         </div>
     </footer>
 

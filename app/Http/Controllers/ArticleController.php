@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Category;
+use App\Models\Tag;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -13,8 +15,9 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = Article::all();
-
-        return view('articles.index.php', compact('articles'));
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('articles.index', compact('articles','categories', 'tags'));
     }
 
     /**
@@ -22,7 +25,9 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        return view('articles.create');
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('articles.create', compact('categories', 'tags'));
     }
 
     /**
@@ -33,9 +38,19 @@ class ArticleController extends Controller
         $request->validate([
             'title' => 'required|unique:articles',
             'content' => 'required',
+            'category_id' => 'required',
+            'tags' => 'required|array',
         ]);
 
-        Article::create($request->all());
+        Article::create([
+            'title' => $request->input('title'),
+            'content' => $request->input('content'),
+        ])->categories()->attach($request->input('category_id'));
+    
+        Article::latest('id')->first()->tags()->attach($request->input('tags'));
+
+
+        return redirect()->route('articles.index')->with('success', 'You have successfully created article');
     }
 
     /**
@@ -43,7 +58,7 @@ class ArticleController extends Controller
      */
     public function show(Article $article)
     {
-        //
+        return view('articles.view', compact('article'));
     }
 
     /**
@@ -51,7 +66,9 @@ class ArticleController extends Controller
      */
     public function edit(Article $article)
     {
-        return view('articles.edit', compact('category'));
+        $categories = Category::all();
+        $tags = Tag::all();
+        return view('articles.edit', compact('article', 'categories', 'tags'));
     }
 
     /**
@@ -60,14 +77,19 @@ class ArticleController extends Controller
     public function update(Request $request, Article $article)
     {
         $request->validate([
-            'title' => 'required|unique:articles,' . $article->id,
-            'content' => 'required|,'. $article->id,
+            'title' => 'required|unique:articles,title,' . $article->id,
+            'content' => 'required',
         ]);
 
-        $article->update($request->all());
+        $article->update($request->except('_token', '_method', 'category_id', 'tags'));
 
-        return redirect()->route('articles.index')->with('success', 'You have successfully updated article');
+        // Update category and tags separately
+        $article->categories()->sync([$request->input('category_id')]);
+        $article->tags()->sync($request->input('tags'));
+
+        return redirect()->route('articles.index')->with('success', 'You have successfully updated the article');
     }
+
 
     /**
      * Remove the specified resource from storage.
