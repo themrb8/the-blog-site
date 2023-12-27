@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
+
 use App\Models\Article;
 use App\Models\Category;
 use App\Models\Tag;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class ArticleController extends Controller
@@ -34,24 +37,26 @@ class ArticleController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-    {
-        $request->validate([
-            'title' => 'required|unique:articles',
-            'content' => 'required',
-            'category_id' => 'required',
-            'tags' => 'required|array',
-        ]);
+{
+    $request->validate([
+        'title' => 'required|unique:articles',
+        'content' => 'required',
+        'category_id' => 'required',
+        'tags' => 'required|array',
+    ]);
 
-        Article::create([
-            'title' => $request->input('title'),
-            'content' => $request->input('content'),
-        ])->categories()->attach($request->input('category_id'));
-    
-        Article::latest('id')->first()->tags()->attach($request->input('tags'));
+    $user = Auth::user(); // Get the authenticated user
 
+    $article = $user->articles()->create([
+        'title' => $request->input('title'),
+        'content' => $request->input('content'),
+    ]);
 
-        return redirect()->route('articles.index')->with('success', 'You have successfully created article');
-    }
+    $article->categories()->attach($request->input('category_id'));
+    $article->tags()->attach($request->input('tags'));
+
+    return redirect()->route('articles.index')->with('success', 'You have successfully created an article');
+}
 
     /**
      * Display the specified resource.

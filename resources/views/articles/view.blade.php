@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,6 +23,7 @@
     <!-- Font Awesome -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js" integrity="sha256-KzZiKy0DWYsnwMF+X1DvQngQ2/FxF7MF3Ff72XcpuPs=" crossorigin="anonymous"></script>
 </head>
+
 <body class="bg-white font-family-karla">
 
     <!-- Top Bar Nav -->
@@ -69,11 +70,7 @@
     <!-- Topic Nav -->
     <nav class="w-full py-4 border-t border-b bg-gray-100" x-data="{ open: false }">
         <div class="block sm:hidden">
-            <a
-                href="#"
-                class="block md:hidden text-base font-bold uppercase text-center flex justify-center items-center"
-                @click="open = !open"
-            >
+            <a href="#" class="block md:hidden text-base font-bold uppercase text-center flex justify-center items-center" @click="open = !open">
                 Topics <i :class="open ? 'fa-chevron-down': 'fa-chevron-up'" class="fas ml-2"></i>
             </a>
         </div>
@@ -106,7 +103,7 @@
                     <p href="#" class="text-sm pb-8">
                         By <a href="#" class="font-semibold hover:text-gray-800">The Default User</a>, Published on {{ \Carbon\Carbon::parse($article->created_at)->format('F jS, Y \a\t H:i') }}
                     </p>
-                   <p>{{ $article->content }}</p>
+                    <p>{{ $article->content }}</p>
                 </div>
             </article>
 
@@ -175,4 +172,5 @@
     </footer>
 
 </body>
+
 </html>

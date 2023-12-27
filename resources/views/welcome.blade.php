@@ -31,8 +31,8 @@
 
             <nav>
                 <ul class="flex items-center justify-between font-bold text-sm text-white uppercase no-underline">
-                    <li><a class="hover:text-gray-200 hover:underline px-4" href="#">Login</a></li>
-                    <li><a class="hover:text-gray-200 hover:underline px-4" href="#">Register</a></li>
+                <li><a class="hover:text-gray-200 hover:underline px-4" href="{{ route('login') }}">Login</a></li>
+                <li><a class="hover:text-gray-200 hover:underline px-4" href="{{ route('register') }}">Register</a></li>
                 </ul>
             </nav>
 
@@ -104,7 +104,7 @@
 
                     <a href="#" class="text-3xl font-bold hover:text-gray-700 pb-4">{{ $article->title}}</a>
                     <p href="#" class="text-sm pb-3">
-                        By <a href="#" class="font-semibold hover:text-gray-800">The Default User</a>, Published on {{ \Carbon\Carbon::parse($article->created_at)->format('F jS, Y \a\t H:i') }}
+                        By <a href="#" class="font-semibold hover:text-gray-800">{{ $article->user->name }}</a>, Published on {{ \Carbon\Carbon::parse($article->created_at)->format('F jS, Y \a\t H:i') }}
                     </p>
                     <a href="#" class="pb-6">{{ $article->content }}</a>
                     <span>Tags: </span><a href="#" class="text-dark-400 text-sm lowercase pb-4">@foreach($article->tags as $tag)

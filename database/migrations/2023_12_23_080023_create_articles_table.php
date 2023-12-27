@@ -15,14 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
+            $table->softDeletes();
         });
 
         Schema::create('article_category', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('article_id');
             $table->unsignedBigInteger('category_id');
-
             $table->unique([
                 'article_id',
                 'category_id',
